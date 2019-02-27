@@ -1,0 +1,39 @@
+ion-toolbar {
+  --background: #4c8dff;
+}
+
+ion-title {
+  --color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+ion-button {
+  --color: #ffffff;
+}
+
+ion-item {
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.notebook {
+  --background: url("../../assets/img/notebook2.jpg") bottom no-repeat;
+}
+
+.monitor {
+  --background: url("../../assets/img/monitor2.jpg") center no-repeat;
+}
+
+.teclado {
+  --background: url("../../assets/img/teclado.png") center no-repeat;
+}
+
+ion-label {
+  margin: 50px 20px;
+  text-transform: uppercase;
+}
+
+ion-list {
+  margin-top: 30px;
+}
