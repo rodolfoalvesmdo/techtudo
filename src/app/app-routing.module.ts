@@ -6,8 +6,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'categorias', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'categorias', canActivate:[AuthGuard], loadChildren: './categorias/categorias.module#CategoriasPageModule' },
-  { path: 'notebooks', canActivate: [AuthGuard], loadChildren: './notebooks/notebooks.module#NotebooksPageModule' },
+  { path: 'categorias', loadChildren: './categorias/categorias.module#CategoriasPageModule' },
+  { path: 'notebooks', loadChildren: './notebooks/notebooks.module#NotebooksPageModule' },
 ];
 
 @NgModule({
@@ -15,3 +15,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+//canActivate: [AuthGuard]

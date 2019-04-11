@@ -25,9 +25,4 @@ export class CategoriasPage implements OnInit {
     toast.present();
   }
 
-  logout() {
-    AuthGuard.podeAcessar = false;
-    this.router.navigateByUrl("login");
-  }
-
 }
