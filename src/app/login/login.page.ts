@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthGuard } from '../guards/auth.guard';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: "app-login",
@@ -12,7 +13,7 @@ export class LoginPage implements OnInit {
   msg = "";
   formulario: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private usuarioService: UsuarioService) {}
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
@@ -30,6 +31,18 @@ export class LoginPage implements OnInit {
       AuthGuard.podeAcessar = true;
       this.formulario.reset();
       this.router.navigateByUrl('categorias');      
+    } else {
+      this.msg = "Login ou senha incorreto!";
+    }
+  }
+
+  async logar() {
+    let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
+
+    if(logou) {
+      AuthGuard.podeAcessar = true;
+      this.formulario.reset();
+      this.router.navigateByUrl('categorias');
     } else {
       this.msg = "Login ou senha incorreto!";
     }
