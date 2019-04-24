@@ -1,38 +1,32 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { BancoService } from './banco.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class UsuarioService extends BancoService {
 
-  constructor(private sqlite: SQLite) { 
-    this.sqlite.create({
-      name: 'tech_tudo.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-        db.executeSql("CREATE TABLE IF NOT EXISTS usuarios ( \
-          id INTEGER PRIMARY KEY AUTOINCREMENT, \
-          login TEXT, \
-          senha TEXT, \
-        )", []);
-
-        db.executeSql("INSERT INTO usuarios (login, senha) VALUES (?, ?)", ["rodolfo@techtudo.com.br", "123456"]);
+  public logar(email: string, senha: string): Promise<any> {
+    return this.getDB().then((db: SQLiteObject) => {
+        return db.executeSql("SELECT email FROM usuarios WHERE email = ? AND senha = ?", [email, senha]).then(resultado => { 
+          return (resultado.rows.length > 0);
+        });
     });
-
   }
 
-  public logar(login: string, senha: string): Promise<any> {
-    return this.sqlite.create({
-      name: 'tech_tudo.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-      return db.executeSql("SELECT login FROM usuarios WHERE login = ? AND senha = ?", [login, senha]).then(resultado => {
-        return (resultado.rows.length > 0);
+  public buscarUsuarios(): Promise<any> {
+    return this.getDB().then((db: SQLiteObject) => {
+      return db.executeSql("SELECT * FROM usuarios", []).then(resultado => {
+        let retornar = [];
+        if (resultado.rows.length > 0) {
+          for(let i = 0; i < resultado.rows.length; i++) {
+            retornar.push(resultado.rows.item(i));
+          }
+        }
+        return retornar;
       })
-    })
+    });
   }
-
-
+  
 }

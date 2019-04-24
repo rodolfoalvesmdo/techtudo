@@ -17,26 +17,12 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      senha: ["", [Validators.required, Validators.minLength(6)]]
+      email: ["rodolfoalvesmdo@gmail.com ", [Validators.required, Validators.email]],
+      senha: ["123456", [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  auth() {
-    if (
-      this.formulario.valid &&
-      this.formulario.get("email").value == "rodolfo@techtudo.com.br" &&
-      this.formulario.get("senha").value == "123456"
-    ) {
-      AuthGuard.podeAcessar = true;
-      this.formulario.reset();
-      this.router.navigateByUrl('categorias');      
-    } else {
-      this.msg = "Login ou senha incorreto!";
-    }
-  }
-
-  async logar() {
+  async efetuarLogin() {
     let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
 
     if(logou) {
@@ -47,4 +33,26 @@ export class LoginPage implements OnInit {
       this.msg = "Login ou senha incorreto!";
     }
   }
+
+  // async efetuarLogin() {
+  //   let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
+
+  //   if(logou) {
+
+  //     this.usuarioService.buscarUsuarios().then(resultados => {
+  //       resultados.forEach(usuario => {
+  //         if(usuario.email == this.formulario.get('email').value && usuario.senha == this.formulario.get('senha').value) {
+  //           this.id = usuario.id;
+  //         }
+  //       });
+  //     });
+
+  //     AuthGuard.podeAcessar = true;
+  //     this.formulario.reset();
+  //     this.router.navigateByUrl('categorias');
+      
+  //   } else {
+  //     this.msg = "Login ou senha incorreto!";
+  //   }
+  // }
 }
