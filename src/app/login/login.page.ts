@@ -10,8 +10,11 @@ import { UsuarioService } from '../services/usuario.service';
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
+  
   msg = "";
   formulario: FormGroup;
+
+  // listaUsuarios:any = [];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private usuarioService: UsuarioService) {}
 
@@ -23,36 +26,26 @@ export class LoginPage implements OnInit {
   }
 
   async efetuarLogin() {
+    
     let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
-
     if(logou) {
       AuthGuard.podeAcessar = true;
-      this.formulario.reset();
+      // this.formulario.reset();
       this.router.navigateByUrl('categorias');
     } else {
       this.msg = "Login ou senha incorreto!";
     }
   }
 
-  // async efetuarLogin() {
-  //   let logou = await this.usuarioService.logar(this.formulario.get('email').value, this.formulario.get('senha').value);
-
-  //   if(logou) {
-
-  //     this.usuarioService.buscarUsuarios().then(resultados => {
-  //       resultados.forEach(usuario => {
-  //         if(usuario.email == this.formulario.get('email').value && usuario.senha == this.formulario.get('senha').value) {
-  //           this.id = usuario.id;
-  //         }
-  //       });
-  //     });
-
-  //     AuthGuard.podeAcessar = true;
-  //     this.formulario.reset();
-  //     this.router.navigateByUrl('categorias');
-      
-  //   } else {
-  //     this.msg = "Login ou senha incorreto!";
-  //   }
+  efetuarCadastro() {
+    this.usuarioService.cadastrar(this.formulario.get('email').value, this.formulario.get('senha').value).then(() => {}).catch(() => {
+      alert('Erro ao Cadastrar Usuário');
+    });
+  }
+  
+  // listarUsuarios() {
+  //   this.usuarioService.buscarTodosUsuarios().then(resultado => {
+  //     this.listaUsuarios = resultado;
+  //   }).catch((erro) => alert(erro));
   // }
 }

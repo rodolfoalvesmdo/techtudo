@@ -7,9 +7,6 @@ import { Platform } from '@ionic/angular';
 })
 export class BancoService {
 
-  email = "rodolfoalvesmdo@gmail.com"
-  senha = "123456"
-
   constructor(private sqlite: SQLite, platform: Platform) { 
     platform.ready().then(() => this.createDB());
   }
@@ -22,19 +19,16 @@ export class BancoService {
   } //fim getDB
 
   private createDB() {
-    this.getDB().then((db: SQLiteObject) => {
-      db.executeSql("CREATE TABLE IF NOT EXISTS usuarios ( \
-          id INTEGER PRIMARY KEY AUTOINCREMENT, \
-          email TEXT, \
-          senha TEXT, \
+    this.getDB().then((db:SQLiteObject) => {
+      db.executeSql("CREATE TABLE IF NOT EXISTS usuarios(\
+          id INTEGER PRIMARY KEY AUTOINCREMENT,\
+          email TEXT,\
+          senha TEXT\
         )", []);       
       
-      db.executeSql("INSERT INTO usuarios (email, senha) VALUES (?, ?)", [this.email, this.senha]);
-
     });
-
+    
   } //fim createDB
-
   
 
 }

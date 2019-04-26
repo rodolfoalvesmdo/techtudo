@@ -7,11 +7,11 @@ import { BancoService } from './banco.service';
 })
 export class UsuarioService extends BancoService {
 
-  public logar(email: string, senha: string): Promise<any> {
-    return this.getDB().then((db: SQLiteObject) => {
-        return db.executeSql("SELECT email FROM usuarios WHERE email = ? AND senha = ?", [email, senha]).then(resultado => { 
-          return (resultado.rows.length > 0);
-        });
+  public logar(email:string, senha:string): Promise<any> {
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT email FROM usuarios WHERE email = ? AND senha = ?", [email, senha]).then(resultado => { 
+        return (resultado.rows.length > 0);
+      });
     });
   }
 
@@ -28,5 +28,27 @@ export class UsuarioService extends BancoService {
       })
     });
   }
+
+  public cadastrar(email: string, senha: string) {
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("INSERT INTO usuarios (email, senha) VALUES (?, ?)", [email, senha]);
+    });
+  }
+
+  public buscarTodosUsuarios(): Promise<any> {
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT * FROM usuarios", []).then(resultado => {
+        let retornar = [];
+        if (resultado.rows.length > 0) {
+          for(let i = 0; i < resultado.rows.length; i++) {
+            retornar.push(resultado.rows.item(i));
+          }
+        }
+        return retornar;
+      })
+    });
+  }
+
+  
   
 }

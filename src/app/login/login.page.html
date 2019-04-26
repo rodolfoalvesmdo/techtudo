@@ -20,11 +20,41 @@
       <p id="alerta-login">{{ msg }}</p>
 
       <ion-button (click)="efetuarLogin()" expand="full">
-        ENTRAR
+        Entrar
+      </ion-button>
+      <ion-button (click)="efetuarCadastro()" expand="full">
+        Cadastrar
       </ion-button>
       
-    </ion-list>    
+    </ion-list>   
   </form>
+
+  <!-- <ion-row>
+    <ion-col size="4">
+      <ion-button (click)="efetuarCadastro()" expand="full">
+        Cadastrar-se
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-button (click)="efetuarLogin()">
+        Entrar
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-button (click)="listaUsuarios()">
+        Entrar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-list>
+    <ion-label>Usuários Cadastrados</ion-label>
+    <ion-item color="primary" *ngFor="let usuario of listaUsuarios">
+      <ion-label>{{ usuario.nome }}</ion-label>
+    </ion-item>
+  </ion-list> -->
 
   
   </div>
